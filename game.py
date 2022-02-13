@@ -33,12 +33,12 @@ class Game:
 
         actions = [p1, p2, p3]
         winner = -1
-        if "P" in actions and "R" in actions and 'S' not in actions:
-            winner = 'P'
-        elif "P" in actions and "S" in actions and 'R' not in actions:
-            winner = 'S'
-        elif "R" in actions and "S" in actions and 'P' not in actions:
-            winner = 'R'
+        if "Б" in actions and "К" in actions and 'Н' not in actions:
+            winner = 'Б'
+        elif "Б" in actions and "Н" in actions and 'К' not in actions:
+            winner = 'Н'
+        elif "К" in actions and "Н" in actions and 'Б' not in actions:
+            winner = 'К'
         else:
             return winner
         return [key for key, value in enumerate(actions) if value == winner]

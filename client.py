@@ -1,3 +1,5 @@
+import os
+
 import pygame
 from network import Network
 
@@ -8,22 +10,33 @@ height = 500
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Клиент")
 
+rock_image = pygame.image.load(
+    os.path.join('images', 'rock.png')
+)
+paper_image = pygame.image.load(
+    os.path.join('images', 'paper.png')
+)
+scissors_image = pygame.image.load(
+    os.path.join('images', 'scissors.png')
+)
+
+rock = pygame.transform.scale(rock_image, (100, 100))
+paper = pygame.transform.scale(paper_image, (100, 100))
+scissors = pygame.transform.scale(scissors_image, (100, 100))
+
 
 class Button:
-    def __init__(self, text, x, y, color):
+    def __init__(self, text, x, y, color, image):
         self.text = text
         self.x = x
         self.y = y
         self.color = color
         self.width = 100
         self.height = 100
+        self.image = image
 
     def draw(self, win):
-        pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.height))
-        font = pygame.font.SysFont("comicsans", 20)
-        text = font.render(self.text, True, (255, 255, 255))
-        win.blit(text, (self.x + round(self.width / 2) - round(text.get_width() / 2),
-                        self.y + round(self.height / 2) - round(text.get_height() / 2)))
+        win.blit(self.image, (self.x, self.y, self.width, self.height))
 
     def click(self, pos):
         x1 = pos[0]
@@ -97,8 +110,8 @@ def redraw_window(win, game, p):
     pygame.display.update()
 
 
-btns = [Button("Rock", 25, 350, (0, 0, 0)), Button("Scissors", 150, 350, (0, 0, 0)),
-        Button("Paper", 275, 350, (0, 0, 0))]
+btns = [Button("Камень", 25, 350, (0, 0, 0), rock), Button("Ножницы", 150, 350, (0, 0, 0), scissors),
+        Button("Бумага", 275, 350, (0, 0, 0), paper)]
 
 
 def main():
