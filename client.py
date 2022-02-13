@@ -42,14 +42,63 @@ def redraw_window(win, game, p):
         text = font.render("Ожидаем игроков...", True, (0, 0, 0))
         win.blit(text, (width / 2 - text.get_width() / 2, height / 2 - text.get_height() / 2))
     else:
+        font = pygame.font.SysFont("comicsans", 20)
+        text = font.render("Твой ход", True, (0, 0, 0))
+        win.blit(text, (150, 40))
+
+        text = font.render("Оппоненты", True, (0, 0, 0))
+        win.blit(text, (140, 200))
+
+        move1 = game.get_player_move(0)
+        move2 = game.get_player_move(1)
+        move3 = game.get_player_move(2)
+        if game.all_went():
+            text1 = font.render(move1, True, (0, 0, 0))
+            text2 = font.render(move2, True, (0, 0, 0))
+            text3 = font.render(move3, True, (0, 0, 0))
+        else:
+            if game.p1_went and p == 0:
+                text1 = font.render(move1, True, (0, 0, 0))
+            elif game.p1_went:
+                text1 = font.render("Выбрал", True, (0, 0, 0))
+            else:
+                text1 = font.render("Ждем...", True, (0, 0, 0))
+
+            if game.p2_went and p == 1:
+                text2 = font.render(move2, True, (0, 0, 0))
+            elif game.p2_went:
+                text2 = font.render("Выбрал", True, (0, 0, 0))
+            else:
+                text2 = font.render("Ждем...", True, (0, 0, 0))
+
+            if game.p3_went and p == 2:
+                text3 = font.render(move3, True, (0, 0, 0))
+            elif game.p3_went:
+                text3 = font.render("Выбрал", True, (0, 0, 0))
+            else:
+                text3 = font.render("Ждем...", True, (0, 0, 0))
+
+        if p == 1:
+            win.blit(text2, (170, 80))
+            win.blit(text1, (100, 240))
+            win.blit(text3, (240, 240))
+        elif p == 2:
+            win.blit(text3, (170, 80))
+            win.blit(text2, (100, 240))
+            win.blit(text1, (240, 240))
+        else:
+            win.blit(text1, (170, 80))
+            win.blit(text2, (100, 240))
+            win.blit(text3, (240, 240))
+
         for btn in btns:
             btn.draw(win)
 
     pygame.display.update()
 
 
-btns = [Button("Rock", 25, 350, (0, 0, 0)), Button("Scissors", 150, 350, (0, 0, 0)),
-        Button("Paper", 275, 350, (0, 0, 0))]
+btns = [Button("Камень", 25, 350, (0, 0, 0)), Button("Ножницы", 150, 350, (0, 0, 0)),
+        Button("Бумага", 275, 350, (0, 0, 0))]
 
 
 def main():

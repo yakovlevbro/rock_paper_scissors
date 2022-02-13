@@ -10,6 +10,9 @@ class Game:
     def connected(self):
         return self.ready
 
+    def get_player_move(self, p):
+        return self.moves[p]
+
     def play(self, player, move):
         self.moves[player] = move
         if player == 0:
