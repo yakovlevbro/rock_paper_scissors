@@ -15,8 +15,8 @@ s.listen(3)
 print("Ждем подключения, сервер запустился")
 
 
-def threaded_client(conn):
-    conn.send(str.encode('test'))
+def threaded_client(conn, p):
+    conn.send(str.encode(str(p)))
 
     while True:
         try:
@@ -27,9 +27,10 @@ def threaded_client(conn):
     print("Соединение потеряно")
     conn.close()
 
-
+p = 0
 while True:
     conn, addr = s.accept()
     print("Connected to:", addr)
 
-    start_new_thread(threaded_client, (conn,))
+    start_new_thread(threaded_client, (conn, p))
+    p += 1
