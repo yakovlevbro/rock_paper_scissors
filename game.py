@@ -25,6 +25,24 @@ class Game:
     def all_went(self):
         return self.p1_went and self.p2_went and self.p3_went
 
+    def winner(self):
+
+        p1 = self.moves[0].upper()[0]
+        p2 = self.moves[1].upper()[0]
+        p3 = self.moves[2].upper()[0]
+
+        actions = [p1, p2, p3]
+        winner = -1
+        if "P" in actions and "R" in actions and 'S' not in actions:
+            winner = 'P'
+        elif "P" in actions and "S" in actions and 'R' not in actions:
+            winner = 'S'
+        elif "R" in actions and "S" in actions and 'P' not in actions:
+            winner = 'R'
+        else:
+            return winner
+        return [key for key, value in enumerate(actions) if value == winner]
+
     def reset_went(self):
         self.p1_went = False
         self.p2_went = False

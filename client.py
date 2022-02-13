@@ -97,8 +97,8 @@ def redraw_window(win, game, p):
     pygame.display.update()
 
 
-btns = [Button("Камень", 25, 350, (0, 0, 0)), Button("Ножницы", 150, 350, (0, 0, 0)),
-        Button("Бумага", 275, 350, (0, 0, 0))]
+btns = [Button("Rock", 25, 350, (0, 0, 0)), Button("Scissors", 150, 350, (0, 0, 0)),
+        Button("Paper", 275, 350, (0, 0, 0))]
 
 
 def main():
@@ -128,6 +128,16 @@ def main():
                 print("Не удалось получить игру")
                 break
 
+            font = pygame.font.SysFont("comicsans", 50)
+            if game.winner() == -1:
+                text = font.render("Ничья!", True, (0, 0, 0))
+            elif player in game.winner():
+                text = font.render("Вы победили!", True, (0, 0, 0))
+            else:
+                text = font.render("Вы проиграли...", True, (0, 0, 0))
+
+            win.blit(text, (width / 2 - text.get_width() / 2, height / 2 - text.get_height() / 2))
+
             pygame.display.update()
             pygame.time.delay(2000)
 
@@ -142,13 +152,13 @@ def main():
                     if btn.click(pos) and game.connected():
                         if player == 0:
                             if not game.p1_went:
-                                print(btn.text)
+                                n.send(btn.text)
                         elif player == 1:
                             if not game.p2_went:
-                                print(btn.text)
+                                n.send(btn.text)
                         elif player == 2:
                             if not game.p3_went:
-                                print(btn.text)
+                                n.send(btn.text)
 
         redraw_window(win, game, player)
 
