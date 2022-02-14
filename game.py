@@ -3,8 +3,10 @@ class Game:
         self.p1_went = False
         self.p2_went = False
         self.p3_went = False
+        self.p4_went = False
+        self.p5_went = False
         self.ready = False
-        self.moves = [None, None, None]
+        self.moves = [None, None, None, None, None]
         self.id = id
 
     def connected(self):
@@ -19,19 +21,25 @@ class Game:
             self.p1_went = True
         elif player == 1:
             self.p2_went = True
-        else:
+        elif player == 2:
             self.p3_went = True
+        elif player == 3:
+            self.p4_went = True
+        elif player == 4:
+            self.p5_went = True
 
     def all_went(self):
-        return self.p1_went and self.p2_went and self.p3_went
+        return self.p1_went and self.p2_went and self.p3_went and self.p4_went and self.p5_went
 
     def winner(self):
 
         p1 = self.moves[0].upper()[0]
         p2 = self.moves[1].upper()[0]
         p3 = self.moves[2].upper()[0]
+        p4 = self.moves[3].upper()[0]
+        p5 = self.moves[4].upper()[0]
 
-        actions = [p1, p2, p3]
+        actions = [p1, p2, p3, p4, p5]
         winner = -1
         if "Б" in actions and "К" in actions and 'Н' not in actions:
             winner = 'Б'
@@ -47,4 +55,6 @@ class Game:
         self.p1_went = False
         self.p2_went = False
         self.p3_went = False
+        self.p4_went = False
+        self.p5_went = False
 

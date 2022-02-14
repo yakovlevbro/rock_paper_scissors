@@ -65,10 +65,14 @@ def redraw_window(win, game, p):
         move1 = game.get_player_move(0)
         move2 = game.get_player_move(1)
         move3 = game.get_player_move(2)
+        move4 = game.get_player_move(3)
+        move5 = game.get_player_move(4)
         if game.all_went():
             text1 = font.render(move1, True, (0, 0, 0))
             text2 = font.render(move2, True, (0, 0, 0))
             text3 = font.render(move3, True, (0, 0, 0))
+            text4 = font.render(move4, True, (0, 0, 0))
+            text5 = font.render(move5, True, (0, 0, 0))
         else:
             if game.p1_went and p == 0:
                 text1 = font.render(move1, True, (0, 0, 0))
@@ -91,18 +95,50 @@ def redraw_window(win, game, p):
             else:
                 text3 = font.render("Ждем...", True, (0, 0, 0))
 
+            if game.p4_went and p == 3:
+                text4 = font.render(move4, True, (0, 0, 0))
+            elif game.p4_went:
+                text4 = font.render("Выбрал", True, (0, 0, 0))
+            else:
+                text4 = font.render("Ждем...", True, (0, 0, 0))
+
+            if game.p5_went and p == 4:
+                text5 = font.render(move5, True, (0, 0, 0))
+            elif game.p5_went:
+                text5 = font.render("Выбрал", True, (0, 0, 0))
+            else:
+                text5 = font.render("Ждем...", True, (0, 0, 0))
+
         if p == 1:
             win.blit(text2, (170, 80))
             win.blit(text1, (100, 240))
             win.blit(text3, (240, 240))
+            win.blit(text4, (100, 280))
+            win.blit(text5, (240, 280))
         elif p == 2:
             win.blit(text3, (170, 80))
-            win.blit(text2, (100, 240))
-            win.blit(text1, (240, 240))
+            win.blit(text1, (100, 240))
+            win.blit(text2, (240, 240))
+            win.blit(text4, (100, 280))
+            win.blit(text5, (240, 280))
+        elif p == 3:
+            win.blit(text4, (170, 80))
+            win.blit(text1, (100, 240))
+            win.blit(text2, (240, 240))
+            win.blit(text3, (100, 280))
+            win.blit(text5, (240, 280))
+        elif p == 4:
+            win.blit(text5, (170, 80))
+            win.blit(text1, (100, 240))
+            win.blit(text2, (240, 240))
+            win.blit(text3, (100, 280))
+            win.blit(text4, (240, 280))
         else:
             win.blit(text1, (170, 80))
             win.blit(text2, (100, 240))
             win.blit(text3, (240, 240))
+            win.blit(text4, (100, 280))
+            win.blit(text5, (240, 280))
 
         for btn in btns:
             btn.draw(win)
@@ -171,6 +207,12 @@ def main():
                                 n.send(btn.text)
                         elif player == 2:
                             if not game.p3_went:
+                                n.send(btn.text)
+                        elif player == 3:
+                            if not game.p4_went:
+                                n.send(btn.text)
+                        elif player == 4:
+                            if not game.p5_went:
                                 n.send(btn.text)
 
         redraw_window(win, game, player)

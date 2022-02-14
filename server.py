@@ -14,7 +14,7 @@ try:
 except socket.error as e:
     str(e)
 
-s.listen(3)
+s.listen(5)
 print("Ждем подключения, сервер запустился")
 
 games = {}
@@ -63,14 +63,18 @@ while True:
 
     id_count += 1
     p = 0
-    game_id = (id_count - 1) // 3
-    if id_count % 3 == 1:
+    game_id = (id_count - 1) // 5
+    if id_count % 5 == 1:
         games[game_id] = Game(game_id)
         print("Создание новой игры...")
-    elif id_count % 3 == 2:
+    elif id_count % 5 == 2:
         p = 1
+    elif id_count % 5 == 3:
+        p = 2
+    elif id_count % 5 == 4:
+        p = 3
     else:
         games[game_id].ready = True
-        p = 2
+        p = 4
 
     start_new_thread(threaded_client, (conn, p, game_id))
